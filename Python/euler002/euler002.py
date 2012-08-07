@@ -1,43 +1,31 @@
-def sumOfMultiples(numList,maxNum):
-    '''Determines the sum of all the multiples of the numbers in numList less than maxNum
+def fibEvenSum(maxNum):
+    '''Determines the sum of all the even Fibonocci numbers in numList less than maxNum
         input:
-            numList = list of ints
             maxNum = int
         output:
-            sumTotal = int sum of all multiples of numbers in numList less than maxNum
+            sumTotal = int sum of all even Fib numbers less than maxNum
     '''
-    sumTotal = 0
+    sumTotal = 0 #would be 1 for sum of all fib numbers because fn_1 starts at 1
+    fn = 0
+    fn_1 = 1
+    fn_2 = 0
     
-    for num in numList:
-        maxIndex = (maxNum-1)/num
-        sumTotal += sumHelper(num,maxIndex)[0]
+    if maxNum < 0:
+        return "error"
+    elif maxNum == 1:
+        return 0
+    
+    while fn < maxNum:
+        if fn%2 == 0:
+            sumTotal += fn
+        fn = fn_1 + fn_2
+        fn_2 = fn_1
+        fn_1 = fn
         
     return sumTotal
-        
-def sumHelper(num, maxIndex):
-    '''Determines the sum of all the multiples of num up to num*maxIndex
-        input:
-            num = int
-            maxIndex = int
-        output:
-            [sum_maxIndex, x_maxIndex]
-                sum_maxIndex = sum of all the multiples of num up to num*maxIndex
-                x_maxIndex = num*maxIndex solved recursively
-    '''
-    
-    if maxIndex < 0:
-        return ["error", "error"]
-    elif maxIndex == 0:
-        return [0,0]
-    elif maxIndex == 1:
-        return [num, 0]
-    else:
-        [newSum,numAtLowerIndex] = sumHelper(num,maxIndex-1)
-        numAtIndex = num + numAtLowerIndex
-        return [numAtIndex, numAtIndex + newSum]
 
 if __name__ == "__main__":
-    print "Sumhelper(10,0) = " + str(sumHelper(10,0))
-    print "Sumhelper(10,0) = " + str(sumHelper(10,2))
-    print "Sumhelper(3,3) = " + str(sumHelper(3,3))
-    print "SumOfMultiples([10],11) = " + str(sumOfMultiples([10],11)) 
+    print "fibEvenSum(2) = " + str(fibEvenSum(2)) #0
+    print "fibEvenSum(3) = " + str(fibEvenSum(3)) #2
+    print "fibEvenSum(55) = " + str(fibEvenSum(55)) #44    
+    print "fibEvenSum(4,000,000) = " + str(fibEvenSum(4000000)) #??
