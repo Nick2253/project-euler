@@ -1,43 +1,48 @@
-def sumOfMultiples(numList,maxNum):
-    '''Determines the sum of all the multiples of the numbers in numList less than maxNum
+import math
+
+def isPrime(num):
+    '''Determines if num is prime
         input:
             numList = list of ints
             maxNum = int
         output:
             sumTotal = int sum of all multiples of numbers in numList less than maxNum
     '''
-    sumTotal = 0
+    isPrime = True
+    i = 2 #We don't care if num is divisible by 1
     
-    for num in numList:
-        maxIndex = (maxNum-1)/num
-        sumTotal += sumHelper(num,maxIndex)[0]
+    if num <= 1:
+        return False
+    
+    while (i < (1 + math.sqrt(num)) and i != num): #We add 1 to the sqrt to preclude rounding issues
+        if num%i == 0:
+            isPrime = False
+            break
+        i += 1
         
-    return sumTotal
+    return isPrime
         
-def sumHelper(num, maxIndex):
-    '''Determines the sum of all the multiples of num up to num*maxIndex
+def nPrime(maxIndex):
+    '''Determines the maxIndexth prime
         input:
-            num = int
             maxIndex = int
         output:
-            [sum_maxIndex, x_maxIndex]
-                sum_maxIndex = sum of all the multiples of num up to num*maxIndex
-                x_maxIndex = num*maxIndex solved recursively
+            prime at maxIndex
     '''
+    i = 0
+    num = 0
     
-    if maxIndex < 0:
-        return ["error", "error"]
-    elif maxIndex == 0:
-        return [0,0]
-    elif maxIndex == 1:
-        return [num, 0]
-    else:
-        [newSum,numAtLowerIndex] = sumHelper(num,maxIndex-1)
-        numAtIndex = num + numAtLowerIndex
-        return [numAtIndex, numAtIndex + newSum]
+    while i < maxIndex:
+        num += 1
+        if isPrime(num):
+            i += 1
+            
+    return num
 
 if __name__ == "__main__":
-    print "Sumhelper(10,0) = " + str(sumHelper(10,0))
-    print "Sumhelper(10,0) = " + str(sumHelper(10,2))
-    print "Sumhelper(3,3) = " + str(sumHelper(3,3))
-    print "SumOfMultiples([10],11) = " + str(sumOfMultiples([10],11)) 
+    print "isPrime(1) = " + str(isPrime(1))
+    print "isPrime(2) = " + str(isPrime(2))
+    print "isPrime(10) = " + str(isPrime(10))
+    print "isPrime(23) = " + str(isPrime(23))
+    print "nPrime(6) = " + str(nPrime(6))
+    print "nPrime(10001) = " + str(nPrime(10001))
