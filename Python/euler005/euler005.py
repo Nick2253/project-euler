@@ -1,43 +1,24 @@
-def sumOfMultiples(numList,maxNum):
-    '''Determines the sum of all the multiples of the numbers in numList less than maxNum
+def lcm(maxNum):
+    '''Determines the lcm of all the numbers between 1 and maxNum
         input:
-            numList = list of ints
             maxNum = int
         output:
-            sumTotal = int sum of all multiples of numbers in numList less than maxNum
+            multiple = int lowest common multiple
     '''
-    sumTotal = 0
+    multiple = maxNum
     
-    for num in numList:
-        maxIndex = (maxNum-1)/num
-        sumTotal += sumHelper(num,maxIndex)[0]
-        
-    return sumTotal
-        
-def sumHelper(num, maxIndex):
-    '''Determines the sum of all the multiples of num up to num*maxIndex
-        input:
-            num = int
-            maxIndex = int
-        output:
-            [sum_maxIndex, x_maxIndex]
-                sum_maxIndex = sum of all the multiples of num up to num*maxIndex
-                x_maxIndex = num*maxIndex solved recursively
-    '''
-    
-    if maxIndex < 0:
-        return ["error", "error"]
-    elif maxIndex == 0:
-        return [0,0]
-    elif maxIndex == 1:
-        return [num, 0]
-    else:
-        [newSum,numAtLowerIndex] = sumHelper(num,maxIndex-1)
-        numAtIndex = num + numAtLowerIndex
-        return [numAtIndex, numAtIndex + newSum]
+    for x in range(1,maxNum):
+        for y in range(x+1,maxNum+1):
+            if y%x == 0:
+                break
+            elif y == maxNum:
+                print (x,y)
+                multiple = multiple * x
+                
+    return multiple
 
 if __name__ == "__main__":
-    print "Sumhelper(10,0) = " + str(sumHelper(10,0))
-    print "Sumhelper(10,0) = " + str(sumHelper(10,2))
-    print "Sumhelper(3,3) = " + str(sumHelper(3,3))
-    print "SumOfMultiples([10],11) = " + str(sumOfMultiples([10],11)) 
+    print "lcm(1) = " + str(lcm(1)) #1
+    print "lcm(4) = " + str(lcm(4)) #12
+    print "lcm(10) = " + str(lcm(10)) #2520
+    print "lcm(20) = " + str(lcm(20)) #??
