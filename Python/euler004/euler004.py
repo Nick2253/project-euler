@@ -1,43 +1,30 @@
-def sumOfMultiples(numList,maxNum):
-    '''Determines the sum of all the multiples of the numbers in numList less than maxNum
+def palindromeFinder(numDigits):
+    '''Determines the largest palindrome that is a product of two numbers with numDigits digits
         input:
-            numList = list of ints
-            maxNum = int
+            numDigits = max digits in numbers
         output:
-            sumTotal = int sum of all multiples of numbers in numList less than maxNum
+            largPal = largest palindrome
     '''
-    sumTotal = 0
+    largPal = 0
     
-    for num in numList:
-        maxIndex = (maxNum-1)/num
-        sumTotal += sumHelper(num,maxIndex)[0]
+    for num1 in range(10**(numDigits-1),10**(numDigits)):
+        for num2 in range(num1,10**(numDigits)):
+            if isPalindrome(num1*num2):
+                largPal = max(largPal,num1*num2)
         
-    return sumTotal
+    return largPal
         
-def sumHelper(num, maxIndex):
-    '''Determines the sum of all the multiples of num up to num*maxIndex
+def isPalindrome(number):
+    '''Determines if number is a Palindrome
         input:
-            num = int
-            maxIndex = int
+            number = int
         output:
-            [sum_maxIndex, x_maxIndex]
-                sum_maxIndex = sum of all the multiples of num up to num*maxIndex
-                x_maxIndex = num*maxIndex solved recursively
+            boolean
     '''
-    
-    if maxIndex < 0:
-        return ["error", "error"]
-    elif maxIndex == 0:
-        return [0,0]
-    elif maxIndex == 1:
-        return [num, 0]
-    else:
-        [newSum,numAtLowerIndex] = sumHelper(num,maxIndex-1)
-        numAtIndex = num + numAtLowerIndex
-        return [numAtIndex, numAtIndex + newSum]
+    return str(number)==str(number)[::-1]
 
 if __name__ == "__main__":
-    print "Sumhelper(10,0) = " + str(sumHelper(10,0))
-    print "Sumhelper(10,0) = " + str(sumHelper(10,2))
-    print "Sumhelper(3,3) = " + str(sumHelper(3,3))
-    print "SumOfMultiples([10],11) = " + str(sumOfMultiples([10],11)) 
+    print "isPalindrome(10) = " + str(isPalindrome(10))
+    print "isPalindrome(11911) = " + str(isPalindrome(11911))
+    print "isPalindrome(10012) = " + str(isPalindrome(10012))
+    print "palindromeFinder(3) = " + str(palindromeFinder(3))
