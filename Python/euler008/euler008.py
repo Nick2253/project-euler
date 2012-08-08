@@ -1,43 +1,46 @@
-def sumOfMultiples(numList,maxNum):
-    '''Determines the sum of all the multiples of the numbers in numList less than maxNum
+def fiveConProduct(numString):
+    '''Determines the largest product of five consecutive numbers in numString
         input:
-            numList = list of ints
-            maxNum = int
+            numString = a string of numbers 
         output:
-            sumTotal = int sum of all multiples of numbers in numList less than maxNum
+            maxProduct = int largest product of five consecutive digits
     '''
-    sumTotal = 0
+    maxProduct = 0
+    i = 0
     
-    for num in numList:
-        maxIndex = (maxNum-1)/num
-        sumTotal += sumHelper(num,maxIndex)[0]
+    while i < len(numString)-4:
+        product = 1
+        for digit in numString[i:i+5]:
+            product = product * int(digit)
+        maxProduct = max(product,maxProduct)
+        i+=1
         
-    return sumTotal
-        
-def sumHelper(num, maxIndex):
-    '''Determines the sum of all the multiples of num up to num*maxIndex
-        input:
-            num = int
-            maxIndex = int
-        output:
-            [sum_maxIndex, x_maxIndex]
-                sum_maxIndex = sum of all the multiples of num up to num*maxIndex
-                x_maxIndex = num*maxIndex solved recursively
-    '''
-    
-    if maxIndex < 0:
-        return ["error", "error"]
-    elif maxIndex == 0:
-        return [0,0]
-    elif maxIndex == 1:
-        return [num, 0]
-    else:
-        [newSum,numAtLowerIndex] = sumHelper(num,maxIndex-1)
-        numAtIndex = num + numAtLowerIndex
-        return [numAtIndex, numAtIndex + newSum]
+    return maxProduct
 
 if __name__ == "__main__":
-    print "Sumhelper(10,0) = " + str(sumHelper(10,0))
-    print "Sumhelper(10,0) = " + str(sumHelper(10,2))
-    print "Sumhelper(3,3) = " + str(sumHelper(3,3))
-    print "SumOfMultiples([10],11) = " + str(sumOfMultiples([10],11)) 
+    print "fiveConProduct(11111) = " + str(fiveConProduct("11111"))
+    print "fiveConProduct(0111112) = " + str(fiveConProduct("0111112"))
+    print "fiveConProduct(02112011111) = " + str(fiveConProduct("02112011111"))
+    print "fiveConProduct(02112011110) = " + str(fiveConProduct("02112011110"))
+    print "fiveConProduct(0211201111) = " + str(fiveConProduct("0211201111"))
+    longNum =  ("73167176531330624919225119674426574742355349194934"\
+                "96983520312774506326239578318016984801869478851843"\
+                "85861560789112949495459501737958331952853208805511"\
+                "12540698747158523863050715693290963295227443043557"\
+                "66896648950445244523161731856403098711121722383113"\
+                "62229893423380308135336276614282806444486645238749"\
+                "30358907296290491560440772390713810515859307960866"\
+                "70172427121883998797908792274921901699720888093776"\
+                "65727333001053367881220235421809751254540594752243"\
+                "52584907711670556013604839586446706324415722155397"\
+                "53697817977846174064955149290862569321978468622482"\
+                "83972241375657056057490261407972968652414535100474"\
+                "82166370484403199890008895243450658541227588666881"\
+                "16427171479924442928230863465674813919123162824586"\
+                "17866458359124566529476545682848912883142607690042"\
+                "24219022671055626321111109370544217506941658960408"\
+                "07198403850962455444362981230987879927244284909188"\
+                "84580156166097919133875499200524063689912560717606"\
+                "05886116467109405077541002256983155200055935729725"\
+                "71636269561882670428252483600823257530420752963450")
+    print "fiveConProduct(...) = " + str(fiveConProduct(longNum))
